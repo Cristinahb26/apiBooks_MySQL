@@ -49,5 +49,33 @@ catch(err)
 {
     console.log(err);
 }
-} 
-module.exports = {postRegister, postLogin};
+}
+
+const putUsuario = async (req, res) =>
+{
+    try
+    {   
+        console.log(req.body);
+        let params = [req.body.name,
+                      req.body.last_name,
+                      req.body.email,
+                      req.body.photo,
+                      req.body.password,
+                      req.body.id_user]
+
+        let sql = "UPDATE book SET  name = COALESCE(?, name) , " + 
+                                   "last_name = COALESCE(?, last_name), " +
+                                   "email = COALESCE(?, email), " +
+                                   "photo = COALESCE(?, photo), " +
+                                   "password = COALESCE(?, password) WHERE id_user = ?";
+
+        console.log(sql);
+        let [result] = await pool.query(sql, params);
+        res.send(result); 
+    }
+    catch(err)
+    {
+        console.log(err)
+    }
+}
+module.exports = {postRegister, postLogin, putUsuario};
