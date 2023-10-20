@@ -19,10 +19,10 @@ const getBookId = async (req, res) => {
     const userId = req.query.id_user;
     const bookId = req.query.id_book;
 
-    let sql = 'SELECT * FROM books WHERE user_id = ? AND id_book = ?';
+    let sql = 'SELECT * FROM book WHERE id_user = ? AND id_book = ?';
 
     try {
-        let result = await pool.query(sql, userId, bookId);
+        let result = await pool.query(sql, [userId, bookId]);
         res.send(result);
     }
     catch(err){
